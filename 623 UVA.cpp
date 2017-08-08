@@ -5,40 +5,13 @@ using namespace std;
 #define pf printf
 #define sf scanf
 #define MAX 500000
+#define pi acos(-1.0)
+#define get_stl(s) getline(cin,s)
 #define sif(a) scanf("%d",&a)
 #define pif(a) printf("%d\n",a)
 
 typedef long long ll;
 typedef unsigned long long ull;
-
-void fact(int n)
-{
-    string f;
-    f.push_back('1');
-
-    int carry;
-
-    for(int i=2;i<=n;i++)
-    {
-        carry=0;
-        for(int j=0;j<f.size();j++)
-        {
-            carry += (f[j]-48)*i;
-            f[j] = (carry%10) + 48;
-            carry /= 10;
-        }
-        while(carry)
-        {
-            f.push_back((carry%10)+48);
-            carry/=10;
-        }
-    }
-
-    pf("%d!\n",n);
-    for(int i=f.size()-1;i>=0;i--)
-        pf("%c",f[i]);
-    pf("\n");
-}
 
 int main()
 {
@@ -48,9 +21,40 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int n;
+    string f,fact[1001];
 
+    f.push_back('1');
+
+    fact[0]=f;
+    fact[1]=f;
+
+    for(int i=2,c=0,j=0;i<1001;j=0,c=0,i++)
+    {
+        for(;f[j]!=0;j++)
+        {
+            c+=(f[j]-48)*i;
+            (c>9) ? f[j]=(c%10)+48 : f[j]=c+48;
+            (c>9) ? c/=10 : c=0;
+        }
+
+        while(c)
+        {
+            (c>9) ? f.push_back((c%10)+48) : f.push_back(c+48);
+            (c>9) ? c/=10 : c=0;
+        }
+
+        fact[i]=f;
+        reverse(fact[i].begin(),fact[i].end());
+    }
+
+    int n;
     while(sif(n)!=EOF)
-        fact(n);
+    {
+        pf("%d!\n",n);
+        /*for(int i=fact[n].size()-1;i>=0;i--)
+            pf("%c", fact[n][i]);
+        pf("\n");*/
+        pf("%s\n",fact[n].c_str());
+    }
     return 0;
 }
