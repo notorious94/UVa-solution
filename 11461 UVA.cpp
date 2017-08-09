@@ -24,17 +24,17 @@ int main()
     int r,a,b;
 
     int square[100001];
-    memset(square, 0, sizeof(square));
+
+    square[0]=0;
 
     for(int i=1;i<=100000;i++)
     {
+        square[i]=0;
         r=sqrt(i);
         if(r*r==i)
             square[i]=1;
-    }
-
-    for(int i=1;i<=100000;i++)
         square[i]+=square[i-1];
+    }
 
     while(1)
     {
