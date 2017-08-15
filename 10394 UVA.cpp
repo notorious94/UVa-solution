@@ -16,9 +16,6 @@ typedef unsigned long long ull;
 
 int main()
 {
-    //freopen("in.txt","r", stdin);
-    //freopen("out.txt","w", stdout);
-
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
@@ -45,6 +42,8 @@ int main()
                 pair2.push_back(i+2);
                 count++;
             }
+
+    prime.clear();
 
     while(sif(n)!=EOF)
         pf("(%d, %d)\n", pair1[n-1], pair2[n-1]);
