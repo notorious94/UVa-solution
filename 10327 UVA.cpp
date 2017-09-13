@@ -1,16 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-///Template Starts Here
-
+/// M A C R O Starts Here
 #define pf printf
 #define sf scanf
-#define pb push_back
-#define MAX 600
+#define MAX 500000
+#define INF 99999
+#define pi acos(-1.0)
+#define get_stl(s) getline(cin,s)
+#define sif(a) scanf("%d",&a)
+#define pif(a) printf("%d\n",a)
+#define puf(a) printf("%llu\n",a)
 
 typedef long long ll;
 typedef unsigned long long ull;
-
 
 int main()
 {
@@ -20,37 +23,36 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int n,v;
+    int n;
+    int data[1000];
 
-    vector<int>data;
-
-    while(sf("%d", &n)==1)
+    while(sif(n)!=EOF)
     {
+        int _swap = 0;
+
+        for(int i=0;i<n;i++)
+            sif(data[i]);
+
         for(int i=0;i<n;i++)
         {
-            sf("%d",&v);
-            data.pb(v);
-        }
-        int count=0;
-        bool flag;
-        for(int i=1;i<n;i++)
-        {
-            flag=true;
+            int value = data[i];
+            int hole = i;
 
-            for(int j=0;j<n-1;j++)
+            while(hole>0&&data[hole-1]>value)
             {
-                if(data[j]>data[j+1])
-                {
-                    swap(data[j],data[j+1]);
-                    count++;
-                    flag=false;
-                }
+                data[hole] = data[hole-1];
+                hole--;
+                _swap++;
             }
-            if(flag)
-                break;
+            data[hole] = value;
         }
-        pf("Minimum exchange operations : %d\n", count);
-        data.clear();
+
+        pf("Minimum exchange operations : ");
+
+        pif(_swap);
+
+        _swap=0;
     }
+
     return 0;
 }
