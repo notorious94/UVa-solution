@@ -23,29 +23,37 @@ int main()
 {
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
+
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     int m,n,count;
-    char s[15];
 
     while(sf("%d%d", &n,&m)!=EOF)
     {
         count = 0;
         for(int i=n;i<=m;i++)
         {
-            map<char,int>occur;
+            map<int,int>occur;
             count++;
-            sprintf(s,"%d",i);
 
-            for(int a=0;s[a]!=0;a++)
+            int m,t = i;
+
+            while(t)
             {
-                occur[s[a]]++;
-                if(occur[s[a]]>1){
+                m = t%10;
+
+                occur[m]++;
+
+                if(occur[m]>1)
+                {
                     count--;
                     break;
                 }
+
+                t/=10;
             }
+
         }
         cout<<count<<endl;
     }
