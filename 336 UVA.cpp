@@ -41,11 +41,6 @@ int main()
             graph[b].push_back(a);
         }
 
-        vector<int>List;
-
-        for(it_g = graph.begin() ; it_g != graph.end() ; it_g ++)
-            List.push_back(it_g->first);
-
         while(sf("%d%d",&s, &ttl))
         {
             if(s==0&&ttl==0)
@@ -56,10 +51,10 @@ int main()
             map<int, int>level;
             map<int, int> :: iterator it;
 
-            for(int i=0;i<List.size();i++)
+            for(it_g = graph.begin() ; it_g != graph.end() ; it_g ++)
             {
-                visit[List[i]] = false;
-                level[List[i]] = -1;
+                visit[it_g->first] = false;
+                level[it_g->first] = -1;
             }
 
             queue<int>Q;
