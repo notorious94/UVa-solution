@@ -55,7 +55,7 @@ int main()
     int c,a,n,node;
     int kase=0;
 
-    while(cin>>c)
+    while(scanf("%d",&c)!=EOF)
     {
         vector<int>graph[21];
         kase++;
@@ -63,31 +63,31 @@ int main()
         node = 18;
         while(c--) /// Input for First Node
         {
-            cin>>a;
+            scanf("%d", &a);
             graph[n].push_back(a);
             graph[a].push_back(n);
         }
         while(node--) /// Remaining Nodes
         {
-            cin>>c;
+            scanf("%d",&c);
             n++;
             while(c--)
             {
-                cin>>a;
+                scanf("%d", &a);
                 graph[n].push_back(a);
                 graph[a].push_back(n);
             }
         }
         int q,s,e;
-        cin>>q;
+        scanf("%d", &q);
         printf("Test Set #%d\n",kase);
         while(q--)
         {
-            cin>>s>>e;
+            scanf("%d%d",&s,&e);
             int ans = BFS(graph, s,e);
             printf("%2d to %2d: %d\n",s,e,ans);
         }
-        cout<<endl;
+        printf("\n");
     }
     return 0;
 }
