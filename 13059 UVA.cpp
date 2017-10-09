@@ -28,25 +28,13 @@ int main()
     ull n;
     while(scanf("%llu",&n)!=EOF)
     {
-        ull count =0;
-
-        while(n!=1)
+        if(!n)
+            printf("1\n");
+        else
         {
-            if(n%2!=0)
-            {
-                n-=1;
-                count += n/2;
-                n/=2;
-                n+=1;
-            }
-            else
-            {
-                count+=n/2;
-                n/=2;
-            }
-
+            n--;
+            printf("%llu\n",n);
         }
-        printf("%llu\n",count);
     }
 
     return 0;
