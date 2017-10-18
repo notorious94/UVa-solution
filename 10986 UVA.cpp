@@ -4,8 +4,8 @@ using namespace std;
 /// M A C R O Starts Here
 #define pf printf
 #define sf scanf
-#define MAX 500000
-#define INF 99999
+#define MAX 20005
+#define INF 999999
 #define pi acos(-1.0)
 #define get_stl(s) getline(cin,s)
 #define sif(a) scanf("%d",&a)
@@ -16,39 +16,46 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 
-map<int,vector<int> > graph;
-map<int,vector<int> > cost;
-map<int,vector<int> > :: iterator it;
+int dx[]={0,0,1,-1,-1,1,-1,1};
+int dy[]={-1,1,0,0,1,1,-1,-1};
+int dz[]={0,0,+1,-1,-1,+1,-1,+1};
 
-int Dijkstra(int s, int t)
+class node
 {
-    map<int,int>distance;
+public:
+    int n,w;
+    node(int a,int b){n=a; w=b;}
+    bool operator <(const node& p) const { return w>p.w; }
+};
 
-    for(it = graph.begin();it != graph.end();it++)
-        distance[it->first] = INF;
+int dijkstra(vector<int>graph[], vector<int>cost[], int s, int t)
+{
+    int dis[MAX];
+    for(int i=0;i<MAX;i++)
+        dis[i] = INF;
+    priority_queue<node>pq;
+    pq.push(node(s,0));
+    dis[s]=0;
 
-    distance[t]=INF;
-    priority_queue<int>Q;
-    Q.push(s);
-    distance[s]=0;
-
-    while(Q.size())
+    while(pq.size())
     {
-        int u = Q.top();
-        Q.pop();
+        node top = pq.top();
+        if(top.n==t)  return dis[t];
+        pq.pop();
 
-        for(int i=0;i< graph[u].size();i++)
+        int u = top.n;
+
+        for(int i=0;i<graph[u].size();i++)
         {
             int v = graph[u][i];
-
-            if(distance[u] + cost[u][i] < distance[v])
+            if(dis[u]+cost[u][i]<dis[v])
             {
-                distance[v]=distance[u] + cost[u][i];
-                Q.push(v);
+                dis[v]=dis[u]+cost[u][i];
+                pq.push(node(v,dis[v]));
             }
         }
     }
-    return distance[t];
+    return -1;
 }
 
 int main()
@@ -56,34 +63,32 @@ int main()
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
 
-    int T,n,m,s,t;
-    int x,y,k;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    scanf("%d",&T);
+    int test,n,m,s,t;
+    int u,v,w;
 
-    for(int c=1;c<=T;c++)
+    scanf("%d",&test);
+    for(int kase =1;kase<=test;kase++)
     {
         scanf("%d%d%d%d",&n,&m,&s,&t);
-
-        for(int i=1;i<=m;i++)
+        vector<int>graph[MAX],cost[MAX];
+        while(m--)
         {
-            scanf("%d%d%d",&x,&y,&k);
-
-            graph[x].push_back(y);
-            graph[y].push_back(x);
-            cost[x].push_back(k);
-            cost[y].push_back(k);
+            scanf("%d%d%d",&u,&v,&w);
+            graph[u].push_back(v);
+            graph[v].push_back(u);
+            cost[u].push_back(w);
+            cost[v].push_back(w);
         }
 
-        int res = Dijkstra(s,t);
+        int ans = dijkstra(graph,cost,s,t);
 
-        if(res==INF)
-            printf("Case #%d: unreachable\n",c);
+        if(ans==-1)
+            printf("Case #%d: unreachable\n",kase);
         else
-            printf("Case #%d: %d\n",c,res);
-
-        graph.clear();
-        cost.clear();
+            printf("Case #%d: %d\n",kase,ans);
     }
 
     return 0;
