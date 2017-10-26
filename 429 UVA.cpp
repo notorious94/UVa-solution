@@ -20,39 +20,36 @@ int dx[]={0,0,1,-1,-1,1,-1,1};
 int dy[]={-1,1,0,0,1,1,-1,-1};
 int dz[]={0,0,+1,-1,-1,+1,-1,+1};
 
-map<string, vector<string> > graph;
-map<string, vector<string> > :: iterator it;
-
-int BFS(string s, string e)
+int BFS(vector< vector<int> > graph, int s, int e)
 {
-    map<string , bool>visit;
-    map<string , int>level;
-    for(it = graph.begin();it!=graph.end();it++)
-        visit[it->first]=false;
-
-    queue<string>q;
-    q.push(s);
+    bool visit[graph.size()];
+    int level[graph.size()];
+    memset(visit,false,sizeof(visit));
+    queue<int>q;
     visit[s]=true;
     level[s]=0;
+    q.push(s);
 
     while(q.size())
     {
-        string  u = q.front();
+        int u=q.front();
         q.pop();
-        for(int i=0;i<graph[u].size();i++)
+        for(int i=0 ;i<graph[u].size();i++)
         {
-            string v= graph[u][i];
+            int v = graph[u][i];
             if(visit[v]==false)
             {
-                level[v]=level[u]+1;
                 visit[v]=true;
+                level[v]=level[u]+1;
                 q.push(v);
             }
             if(visit[e])    return level[e];
         }
     }
+
     return -1;
 }
+
 int main()
 {
     //freopen("in.txt","r", stdin);
@@ -69,6 +66,9 @@ int main()
     while(test--)
     {
         vector<string>words;
+        map<string, int>loc;
+        vector<vector<int> >graph;
+
         graph.clear();
         bool ara = false;
 
@@ -78,6 +78,8 @@ int main()
             if(v[0]=='*')
             {
                 ara = true;
+                graph.resize(words.size());
+
                 for(int i=0;i<words.size()-1;i++)
                 {
                     for(int j=i+1;j<words.size();j++)
@@ -90,16 +92,20 @@ int main()
                                 if(words[i][a]!=words[j][a])    c++;
                             if(c==1)
                             {
-                                graph[words[i]].push_back(words[j]);
-                                graph[words[j]].push_back(words[i]);
+                                graph[i].push_back(j);
+                                graph[j].push_back(i);
                             }
                         }
                     }
                 }
+                for(int i=0;i<words.size();i++)
+                    loc[words[i]] = i;
                 words.clear();
             }
+
             else if(ara==false)
                 words.push_back(v);
+
             else if(ara)
             {
                 string s,e;
@@ -114,7 +120,9 @@ int main()
                     if(!des)  s.push_back(v[i]);
                     if(des)   e.push_back(v[i]);
                 }
-                int distance = BFS(s,e);
+                int S = loc[s];
+                int E = loc[e];
+                int distance = BFS(graph,S,E);
                 cout<<s<<" "<<e<<" "<<distance<<endl;
             }
         }
