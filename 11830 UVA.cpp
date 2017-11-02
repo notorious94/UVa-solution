@@ -27,37 +27,26 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    char n[50],s[MAX];
-    map<char, vector<int> >digit;
+    char n[2],s[MAX];
 
     while(scanf("%s %s",n,s))
     {
         if(!strcmp(n,"0") && !strcmp(s,"0"))
             break;
 
-        for(int i = 0; s[i] ; i++)
-            digit[s[i]].push_back(i);
-
-        for(int i=0;i<digit[n[0]].size();i++)
-            s[digit[n[0]][i]] = 'X';
-
-        bool p = false;
-        bool trailZero = false;
+        bool print = false, trail_zero=false;
 
         for(int i=0;s[i];i++)
         {
-            if(s[i]!='X' && s[i]!=48)
+            if(trail_zero==true && s[i]!=n[0])      printf("%c",s[i]);
+            else if(trail_zero==false && s[i]!=48 && s[i]!=n[0])
             {
-                trailZero = p = true;
+                print = trail_zero = true;
                 printf("%c",s[i]);
-                continue;
             }
-            else if(trailZero && s[i]!='X')     printf("%c",s[i]);
         }
-
-        if(!p)  printf("0");
+        if(print==false)    printf("0");
         printf("\n");
-        digit.clear();
     }
 
     return 0;
