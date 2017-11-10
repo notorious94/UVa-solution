@@ -5,44 +5,42 @@ using namespace std;
 #define pf printf
 #define sf scanf
 #define MAX 500000
+#define INF 0x7FFFFFFF
 #define pi acos(-1.0)
 #define get_stl(s) getline(cin,s)
 #define sif(a) scanf("%d",&a)
 #define pif(a) printf("%d\n",a)
+#define puf(a) printf("%llu\n",a)
+#define pii pair<int, int>
 
 typedef long long ll;
 typedef unsigned long long ull;
 
-int counter(int a, int b)
+int dx[]={0,0,1,-1,-1,1,-1,1};
+int dy[]={-1,1,0,0,1,1,-1,-1};
+int dz[]={0,0,+1,-1,-1,+1,-1,+1};
+
+int diff(int s, int e)
 {
-    int count=0;
-    for(;;a++)
-    {
-        if(a>99)
-            a=0;
-        ++count;
-        if(a==b)
-            break;
-    }
-    return --count;
+    int d = abs(s-e);
+    return min(abs(100-d),d);
 }
+
 int main()
 {
-    //freopen("in.txt","r", stdin);
-    //freopen("out.txt","w", stdout);
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    freopen("in.txt","r", stdin);
+    freopen("out.txt","w", stdout);
 
-    int a,b,c1,c2;
+    //ios_base::sync_with_stdio(false);
+    //cin.tie(NULL);
 
-    while(1)
+    int s,e;
+
+    while(cin>>s>>e)
     {
-        sf("%d%d",&a,&b);
-        if(a==-1&&b==-1)
-            break;
-        c1=counter(a,b);
-        c2=counter(b,a);
-        pif(min(c1,c2));
+        if(s<0 && e <0) break;
+        cout<<diff(s,e)<<endl;
     }
+
     return 0;
 }
