@@ -39,64 +39,45 @@ int main()
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
 
-    string s;
-
+    char s[MAX];
+    char c;
     int t,n,a,b;
+    int wrong,right;
 
-    cin>>t;
-
-    cin.ignore();
-    cin.ignore();
-
+    scanf("%d\n\n",&t);
     while(t--)
     {
-        int right = 0, wrong = 0;
-        bool firstLine = true;
+        scanf("%d\n",&n);
+
+        for(int i=1;i<=n;++i){
+            Parent[i]=i;
+            Rank[i] = 1;
+        }
+
+        right = wrong = 0;
 
         while(true)
         {
-            get_stl(s);
-
-            if(!s[0]||!cin)
+            if(!gets(s) || !s[0])
                 break;
 
-            if(firstLine)
-            {
-                n = atoi(s.c_str());
-                firstLine = false;
-                for(int i=1;i<=n;i++){
-                    Rank[i] = 1;
-                    Parent[i]=i;
-                }
-                continue;
-            }
+            sscanf(s,"%c %d %d",&c,&a,&b);
 
-            string temp;
-
-            for(int i=2;i<s.size();i++)
-            {
-                if(s[i]==32){
-                    a = atoi(temp.c_str());
-                    temp.clear();
-                    continue;
-                }
-                temp+=s[i];
-            }
-
-            b = atoi(temp.c_str());
-            temp.clear();
-
-            if(s[0]=='q')
-            {
-                if(Find(a)!=Find(b))    wrong++;
-                else   right++;
-            }
+            if(c=='c')
+                makeUnion(a,b);
 
             else
-                makeUnion(a,b);
+            {
+                if(Find(a)!=Find(b))    wrong++;
+                else right++;
+            }
+
         }
+
         pf("%d,%d\n",right,wrong);
-        if(t)   cout<<endl;
+
+        if(t)   pf("\n");
+
     }
     return 0;
 }
