@@ -28,7 +28,7 @@ int setInfinity()
         }
 }
 
-int Floyd–Warshall(int n)
+int Floyd_Warshall(int n)
 {
     for(int k=0;k<n;k++)
         for(int i=0;i<n;i++)
@@ -122,7 +122,7 @@ int main()
             }
         }
         scanf("%s%s",s1,s2);
-        Floyd–Warshall(++m);
+        Floyd_Warshall(++m);
         ans(s1[0]-'A',s2[0]-'A',m);
     }
     return 0;
