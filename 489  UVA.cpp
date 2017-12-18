@@ -25,7 +25,7 @@ int main()
 
     int r;
     bool alpha[27];
-    map<char,int>freq;
+    int freq[27];
     char solution[MAX],guess[MAX];
 
     while(scanf("%d",&r))
@@ -33,18 +33,16 @@ int main()
         if(r<0) break;
         pf("Round %d\n",r);
 
-        freq.clear();
-
         for(int i='a';i<='z';i++)
         {
+            freq[i-'a'] = 0;
             alpha[i-'a'] = true;
-            freq[i] = 0;
         }
 
         scanf("%s%s",solution,guess);
 
         for(int i=0;solution[i];i++)
-            freq[solution[i]]++;
+            freq[solution[i]-'a']++;
 
         int len = strlen(solution);
         int stroke = 0;
@@ -53,7 +51,7 @@ int main()
         {
             if(alpha[guess[i]-'a'])
             {
-                int f = freq[guess[i]];
+                int f = freq[guess[i]-'a'];
                 (f) ? len-=f : stroke++;
                 alpha[guess[i]-'a'] = false;
             }
