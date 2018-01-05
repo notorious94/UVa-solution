@@ -17,7 +17,7 @@ using namespace std;
 
 typedef long long ll;
 typedef unsigned long long ull;
-
+int ID[1000000];
 int main()
 {
     //freopen("in.txt","r", stdin);
@@ -34,7 +34,6 @@ int main()
 
         queue<int>q[t+1];
         queue<int>Q;
-        map<int,int>ID;
 
         for(int i=1;i<=t;i++)
         {
