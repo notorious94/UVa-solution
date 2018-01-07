@@ -30,6 +30,7 @@ int main()
     int t,l;
 
     scanf("%d",&t);
+
     while(t--)
     {
         scanf("%d",&l);
@@ -43,52 +44,26 @@ int main()
             number.push_back(n);
         }
 
+        sort(number.begin(), number.end());
+
         for(int i=0;i<l-1;i++)
         {
-            for(int j=i+1;j<l;j++)
+            if(number[i].size()<=number[i+1].size())
             {
-                if(number[i].size()<=number[j].size())
-                {
-                    bool match = true;
-                    for(int a=0;number[i][a];a++)
-                    {
-                        if(number[i][a]!=number[j][a])
-                        {
-                            match = false;
-                            break;
-                        }
-                    }
-                    if(match)
-                    {
-                        answer=true;
+                bool match = true;
+                for(int a=0;number[i][a];a++)
+                    if(number[i][a]!=number[i+1][a]){
+                        match = false;
                         break;
                     }
-                }
-                else if(number[j].size()<=number[i].size())
-                {
-                    bool match = true;
-                    for(int a=0;number[j][a];a++)
-                    {
-                        if(number[i][a]!=number[j][a])
-                        {
-                            match = false;
-                            break;
-                        }
-                    }
-                    if(match)
-                    {
-                        answer=true;
-                        break;
-                    }
+                if(match){
+                    answer=true;
+                    break;
                 }
             }
             if(answer)  break;
         }
-        if(answer)
-            pf("NO\n");
-        else
-            pf("YES\n");
+        (!answer) ? pf("YES\n") : pf("NO\n");
     }
-
     return 0;
 }
