@@ -21,43 +21,27 @@ char o ='N';
 
 void direct(char c)
 {
-    if(o=='N')
-    {
-        (c=='R') ? o = 'E' : o = 'W';
-    }
-    else if(o=='S')
-    {
-        (c=='R') ? o = 'W' : o = 'E';
-    }
-    else if(o=='E')
-    {
-        (c=='R') ? o = 'S' : o = 'N';
-    }
-    else if(o=='W')
-    {
-        (c=='R') ? o = 'N' : o = 'S';
-    }
+    if(o=='N')      (c=='R') ? o = 'E' : o = 'W';
+    else if(o=='S') (c=='R') ? o = 'W' : o = 'E';
+    else if(o=='E') (c=='R') ? o = 'S' : o = 'N';
+    else if(o=='W') (c=='R') ? o = 'N' : o = 'S';
 }
 
 void forward()
 {
-    if(o=='N')
-    {
+    if(o=='N'){
         if(grid[x-1][y]!='*')   --x;
     }
 
-    else if(o=='S')
-    {
+    else if(o=='S'){
         if(grid[x+1][y]!='*')   ++x;
     }
 
-    else if(o=='E')
-    {
+    else if(o=='E'){
         if(grid[x][y+1]!='*')   ++y;
     }
 
-    else if(o=='W')
-    {
+    else if(o=='W'){
         if(grid[x][y-1]!='*')   --y;
     }
 }
@@ -69,43 +53,32 @@ int main()
 
     char c, str[200];
     int test;
-    cin >> test;
     bool flag = false;
+
+    scanf("%d",&test);
 
     while (test--)
     {
-        cin >> row >> col;
-        cin.getline(str, sizeof(str)); // eat blank line
-        for (int i = 0; i < row; ++i)
-        {
-            cin.getline(str, sizeof(str));
-            grid[i] = str;
-        }
+        scanf("%d%d",&row,&col);
+        
+        gets(str);
 
-        cin >> x >> y;
+        for (int i = 0; i < row; ++i)
+            get_stl(grid[i]);
+
+        scanf("%d%d",&x,&y);
+
         o = 'N';
         --x;
         --y;
 
         while ( (c = cin.get()) != 'Q')
         {
-            switch(c)
-            {
-                case 'R':
-                    direct(c);
-                    break;
-                case 'L':
-                    direct(c);
-                    break;
-                case 'F':
-                    forward();
-                    break;
-            }
+            if(c=='R'||c=='L')  direct(c);
+            else if(c=='F')     forward();
         }
-        if (flag) cout << endl;
-        flag = true;
-        cout << x+1 << " " << y+1 << " " << o << endl;
+        pf("%d %d %c\n",x+1,y+1,o);
+        if(test)    puts("");
     }
-
     return 0;
 }
