@@ -15,14 +15,30 @@ using namespace std;
 #define pii pair<int, int>
 #define mem(name, value) memset(name, value, sizeof(name))
 
+typedef long long ll;
+typedef unsigned long long ull;
+
+int dx[]={0,0,1,-1,-1,1,-1,1};
+int dy[]={-1,1,0,0,1,1,-1,-1};
+int dz[]={0,0,+1,-1,-1,+1,-1,+1};
+
+int isLeft(double a, double b, double c, double d, double e, double f)
+{
+    double r = 0.5*((a*(d-f))+(b*(e-c))+((c*f)-(d*e)));
+    if(r==0.00) return 0;
+    if(r<0)     return -1;
+    return 1;
+}
+
+/// M A C R O Ends Here
+
 string grid[100];
-int r,c,x,y;
-char d,command[50005];
-int sticker,total;
+int r,c,x,y,sticker,total;
+char tmp,d,command[50005];
 
 bool inBound(int i, int j)
 {
-    return (i>=0&&i<r && j>=0&&j<c) ? true : false;
+    return ((i>=0&&i<r) && (j>=0&&j<c)) ? true : false;
 }
 
 void direct(char c)
@@ -80,9 +96,9 @@ void forward()
         }
     }
 }
+
 void input()
 {
-    char tmp;
     sticker=total=0;
     for(int i=0;i<r;i++)
     {
@@ -102,6 +118,10 @@ void input()
         }
     }
     scanf("%s",command);
+}
+
+void process()
+{
     for(int i=0;sticker<total&&command[i];i++)
     {
         if(command[i]=='F') forward();
@@ -116,11 +136,14 @@ int main()
     //freopen("out.txt","w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+    
     int n;
     while(sf("%d%d%d",&r,&c,&n))
     {
         if(!r&&!c&&!n)  break;
         input();
+        process();
     }
+    
     return 0;
 }
