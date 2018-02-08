@@ -51,22 +51,14 @@ void backtracking()
         pif(t.back());
         return;
     }
-    for(int i=1;i<=n;i++)
+    for(int i=2;i<=n;i++)
     {
         if(at[i]==false)
         {
-            if(t.size() && t[0] == 1 && prime[i+t.back()])
+            if(prime[i+t.back()])
             {
                 at[i] = true;
                 t.push_back(i);
-                backtracking();
-                at[i] = false;
-                t.pop_back();
-            }
-            else if(i==1)
-            {
-                at[i] = true;
-                t.push_back(1);
                 backtracking();
                 at[i] = false;
                 t.pop_back();
@@ -86,11 +78,11 @@ int main()
     while(sf("%d",&n)==1)
     {
         if(++kase>1)    pf("\n");
+        t.clear();
+        t.push_back(1);
         pf("Case %d:\n",kase);
-        if(n==1)
-            pf("1\n");
-        else
-            backtracking();
+        if(n==1)    pf("1\n");
+        else if(n%2==0)  backtracking();
     }
     return 0;
 }
