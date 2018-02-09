@@ -26,6 +26,30 @@ int grid[101][101];
 map<string,int>ID;
 vector<pdd>loc;
 
+int dx[]={0,0,1,-1,-1,1,-1,1};
+int dy[]={-1,1,0,0,1,1,-1,-1};
+int dz[]={0,0,1,-1,-1,1,-1,1};
+
+int isLeft(double a, double b, double c, double d, double e, double f)
+{
+    double r = 0.5*((a*(d-f))+(b*(e-c))+((c*f)-(d*e)));
+    if(r==0.00) return  0;
+    if(r<0)     return -1;
+    return 1;
+}
+
+/// M A C R O Ends Here
+
+void reset(int n)
+{
+    loc.clear();
+    loc.push_back(pdd(-1.0,-1.0));
+    ID.clear();
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j)
+            grid[i][j] = (i==j) ? 0 : INF;
+}
+
 double degtoRad(double deg)
 {
     return deg * (pi/180.0);
@@ -40,40 +64,6 @@ double getDistance(double lat1,double lon1,double lat2,double lon2)
     double c = 2.0*atan2(sqrt(a),sqrt(1.0-a));
     double d = r*c;
     return d;
-}
-
-void reset(int n)
-{
-    loc.clear();
-    loc.push_back(pdd(-1.0,-1.0));
-    ID.clear();
-    for (int i = 1; i <= n; ++i)
-        for (int j = 1; j <= n; ++j)
-            grid[i][j] = (i==j) ? 0 : INF;
-}
-
-void floydWarshall(int n)
-{
-    for (int k = 1; k <= n; ++k)
-        for (int i = 1; i <= n; ++i)
-            for (int j = 1; j <=n; ++j)
-                if(grid[i][k]!=INF && grid[k][j]!=INF)
-                    grid[i][j] = min(grid[i][j], grid[i][k] + grid[k][j]);
-}
-
-void query(int q)
-{
-    char a[25],b[25];
-    while(q--)
-    {
-        scanf("%s%s",&a,&b);
-        int x = ID[a];
-        int y = ID[b];
-        if(grid[x][y]>=INF)
-            pf("no route exists\n");
-        else
-            pf("%d km\n",grid[x][y]);
-    }
 }
 
 void input(int n,int m)
@@ -96,6 +86,27 @@ void input(int n,int m)
     }
 }
 
+void floydWarshall(int n)
+{
+    for (int k = 1; k <= n; ++k)
+        for (int i = 1; i <= n; ++i)
+            for (int j = 1; j <=n; ++j)
+                if(grid[i][k]!=INF && grid[k][j]!=INF)
+                    grid[i][j] = min(grid[i][j], grid[i][k] + grid[k][j]);
+}
+
+void query(int q)
+{
+    char a[25],b[25];
+    while(q--)
+    {
+        scanf("%s%s",&a,&b);
+        int x = ID[a];
+        int y = ID[b];
+        (grid[x][y]>=INF) ? pf("no route exists\n") : pf("%d km\n",grid[x][y]);
+    }
+}
+
 int main()
 {
     //freopen("in.txt","r", stdin);
@@ -105,15 +116,17 @@ int main()
 
     int n,m,q;
     int kase = 0;
+
     while(sf("%d%d%d",&n,&m,&q))
     {
         if(!n && !m && !q)  break;
         if(++kase>1)  puts("");
+        pf("Case #%d\n",kase);
         reset(n);
         input(n,m);
         floydWarshall(n);
-        pf("Case #%d\n",kase);
         query(q);
     }
+
     return 0;
 }
