@@ -21,20 +21,16 @@ typedef unsigned long long ull;
 int dx[]={0,0,1,-1,-1,1,-1,1};
 int dy[]={-1,1,0,0,1,1,-1,-1};
 
-vector<string>g;
+vector<string>grid;
 
 bool inBound(int x, int y)
 {
-    if(x<0 || x>=g.size() || y<0)
-        return false;
-    if(x>=0 && x<g.size() && y>=0 && y<g[x].size())
-        return true;
-    return false;
+    return (x>=0 && x<grid.size() && y>=0 && y<grid[x].size()) ? true : false;
 }
 
 void BFS(int i, int j)
 {
-    g[i][j]='#';
+    grid[i][j]='#';
     queue<pii>q;
     q.push(pii(i,j));
     while(q.size())
@@ -46,23 +42,35 @@ void BFS(int i, int j)
         {
             int vx = ux + dx[i];
             int vy = uy + dy[i];
-            if(inBound(vx,vy))
+            if(inBound(vx,vy) && grid[vx][vy]==' ')
             {
-                if(g[vx][vy]==' ')
-                {
-                    g[vx][vy] = '#';
-                    q.push(pii(vx,vy));
-                }
+                grid[vx][vy] = '#';
+                q.push(pii(vx,vy));
             }
         }
     }
+}
+
+void check()
+{
+    for(int i=0;i<grid.size();i++)
+        for(int j=0;j<grid[i].size();j++)
+            if(grid[i][j]=='*')
+                BFS(i,j);
+}
+
+void print(char s[])
+{
+    for(int i=0;i<grid.size();i++)
+        printf("%s\n",grid[i].c_str());
+    printf("%s\n",s);
 }
 
 int main()
 {
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
-    char s[5000];
+    char s[500];
     int t;
     scanf("%d\n",&t);
     while(t)
@@ -71,17 +79,12 @@ int main()
         if(s[0]=='_')
         {
             t--;
-            for(int i=0;i<g.size();i++)
-                for(int j=0;j<g[i].size();j++)
-                    if(g[i][j]=='*')
-                        BFS(i,j);
-            for(int i=0;i<g.size();i++)
-                printf("%s\n",g[i].c_str());
-            printf("%s\n",s);
-            g.clear();
+            check();
+            print(s);
+            grid.clear();
+            continue;
         }
-        else    g.push_back(s);
+        grid.push_back(s);
     }
-
     return 0;
 }
