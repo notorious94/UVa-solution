@@ -126,7 +126,7 @@ int main()
         }
         scanf("%s",u);
 
-        if(s==1 // Corner Case -> Only one city
+        if(s==1) // Corner Case -> Only one city
         {
             printf("0\n");
             continue;
