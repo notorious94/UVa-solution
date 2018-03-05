@@ -19,30 +19,25 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 
-int dx[]={0,0,1,-1,-1,1,-1,1};
-int dy[]={-1,1,0,0,1,1,-1,-1};
-int dz[]={0,0,+1,-1,-1,+1,-1,+1};
+class edge{
+public:
+    int u,v,w;
+    edge(int a, int b, int c)
+    {
+        u = a;
+        v = b;
+        w = c;
+    }
+};
 
-int isLeft(double a, double b, double c, double d, double e, double f)
-{
-    double r = 0.5*((a*(d-f))+(b*(e-c))+((c*f)-(d*e)));
-    if(r==0.00) return 0;
-    if(r<0)     return -1;
-    return 1;
-}
-
-vector<int>graph[1000];
-vector<int>cost[1000];
 int dist[1000];
+vector<edge>e;
 
 void init(int n)
 {
+    e.clear();
     for(int i=0;i<n;i++)
-    {
         dist[i] = INF;
-        cost[i].clear();
-        graph[i].clear();
-    }
 }
 
 void input(int m)
@@ -51,32 +46,31 @@ void input(int m)
     while(m--)
     {
         scanf("%d%d%d",&a,&b,&c);
-        graph[a].push_back(b);
-        cost[a].push_back(c);
+        e.push_back(edge(a,b,c));
     }
 }
 
 bool BellmanFord(int n)
 {
     dist[0] = 0;
-    for (int i = 1; i <= n; ++i)
+    for(int s=1;s<=n;s++)
     {
         bool update = false;
-        for (int j = 0; j < n ; ++j)
+        for(int i=0;i<e.size();i++)
         {
-            for(int k = 0; k < graph[j].size(); ++k)
+            int u = e[i].u;
+            int v = e[i].v;
+            int w = e[i].w;
+            if(dist[u]!=INF)
             {
-                if(dist[j]!=INF)
+                if(dist[u]+w<dist[v])
                 {
-                    if(dist[j]+cost[j][k]<dist[graph[j][k]])
-                    {
-                        update = true;
-                        dist[graph[j][k]] = dist[j]+cost[j][k];
-                    }
+                    dist[v] = dist[u]+w;
+                    update = true;
                 }
             }
         }
-        if(i==n && update)
+        if(update == true && s==n)
             return true;
         if(update == false)
             return false;
@@ -92,16 +86,12 @@ int main()
 
     int t,n,m;
     scanf("%d",&t);
-
     while(t--)
     {
         scanf("%d%d",&n,&m);
         init(n);
         input(m);
-        if(BellmanFord(n))
-            printf("possible\n");
-        else
-            printf("not possible\n");
+        (BellmanFord(n)) ? printf("possible\n") : printf("not possible\n");
     }
 
     return 0;
