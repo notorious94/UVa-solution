@@ -93,7 +93,7 @@ bool makePair(int a,int b)
     return true;
 }
 
-int Kruskal(int s,int d)
+void Kruskal(int k,int s,int d)
 {
     int min_cost = INF;
     sort(all(edge));
@@ -103,10 +103,11 @@ int Kruskal(int s,int d)
             min_cost = min(min_cost,edge[i].w);
             if(Find(s)==Find(d))    break;
         }
+    printf("Scenario #%d\n",k);
     printf("%d tons\n\n",min_cost);
 }
 
-void input(int r)
+void input(int k,int r)
 {
     int i=1,c,a,b;
     char u[50],v[50];
@@ -134,7 +135,7 @@ void input(int r)
     scanf("%s%s",u,v);
     int s = id[u];
     int d = id[v];
-    Kruskal(s,d);
+    Kruskal(k,s,d);
 }
 
 int main()
@@ -148,9 +149,8 @@ int main()
     while(scanf("%d%d",&n,&r))
     {
         if(!n&&!r)  break;
-        printf("Scenario #%d\n",++kase);
         reset(n);
-        input(r);
+        input(++kase,r);
     }
     return 0;
 }
