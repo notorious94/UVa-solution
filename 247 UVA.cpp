@@ -38,6 +38,7 @@ double _distance(double x1,double y1,double x2,double y2)
     double y1y2 = y1 - y2;
     return sqrt((x1x2*x1x2)+(y1y2*y1y2));
 }
+
 map<int,string>ID;
 map<string,int>id;
 vector<int>G[26],T[26],top,scc;
