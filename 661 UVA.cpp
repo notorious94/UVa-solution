@@ -46,17 +46,18 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int use[21],amps[21];
-    int kase = 0;
-    int n,m,c;
+    int amps[21];
+    bool use[21];
+    int kase = 0,n,m,c;
+
     while(scanf("%d%d%d",&n,&m,&c))
     {
-        if(!n&&!m&&!c)  break;
+        if(n+m+c==0)  break;
 
         for(int i=1;i<=n;i++)
         {
             scanf("%d",&amps[i]);
-            use[i]=0;
+            use[i]=false;
         }
 
         int max_use = 0,id,power = 0;
@@ -66,19 +67,17 @@ int main()
         {
             scanf("%d",&id);
 
-            use[id]++;
+            if(fuse)    continue;
 
-            if(use[id]&1)
+            use[id] = (use[id]==false) ? true : false;
+
+            if(use[id])
             {
                 power+=amps[id];
                 max_use=max(max_use,power);
             }
 
-            else
-            {
-                power-=amps[id];
-                max_use=max(max_use,power);
-            }
+            else    power-=amps[id];
 
             if(power>c) fuse = true;
         }
