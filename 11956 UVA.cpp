@@ -59,10 +59,16 @@ string hexa(int n)
     return result;
 }
 
+string DP[256];
+
 int main()
 {
     //freopen("in.txt","r",stdin);
     //freopen("out.txt","w",stdout);
+
+    for(int i=0;i<256;i++)
+        DP[i]=hexa(i);
+
     int test,kase=0;
     scanf("%d\n",&test);
     while(test--)
@@ -96,7 +102,7 @@ int main()
         }
         printf("Case %d:",++kase);
         for(int i=0; i<100; i++)
-            printf(" %s",hexa(byte[i]).c_str());
+            printf(" %s",DP[byte[i]].c_str());
         puts("");
     }
     return 0;
