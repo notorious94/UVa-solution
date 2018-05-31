@@ -57,24 +57,6 @@ void sieve()
         if(prime[i])    primes.push_back(i);
 }
 
-int euler_phi(int n)
-{
-    int ans = n;
-    int r = sqrt(n);
-    for(int i=0;primes[i]<=r;i++)
-    {
-        if(n%primes[i]==0)
-        {
-            while(n%primes[i]==0)
-                n/=primes[i];
-            ans -= ans/primes[i];
-        }
-        if(prime[n])    break;
-    }
-    if(n>1) ans -= ans/n;
-    return ans;
-}
-
 int main()
 {
     //freopen("in.txt","r", stdin);
@@ -82,26 +64,41 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     sieve();
-
-
     for(int i=2;i<=2000000;i++)
-        phi[i]=euler_phi(i);
+    {
+        int temp = i, r = sqrt(i);
+        phi[i] = i;
 
+        for(int j=0;primes[j]<=r;j++)
+        {
+            if(temp%primes[j]==0)
+            {
+                while(temp%primes[j]==0)
+                    temp/=primes[j];
+                phi[i] -= phi[i]/primes[j];
+            }
+            if(prime[temp])     break;
+        }
+        if(temp>1)  phi[i]-=phi[i]/temp;
+    }
     for(int i=2;i<=2000000;i++)
     {
         int n = i;
         while(n!=1)
         {
-            dphi[i]++;
+            if(dphi[n])
+            {
+                dphi[i]+=dphi[n];
+                break;
+            }
+            else    dphi[i]++;
             n = phi[n];
         }
-        dphi[i]+=dphi[i-1];
     }
-    int n,m;
-    int t;
-
+    for(int i=2;i<=2000000;i++)
+        dphi[i]+=dphi[i-1];
+    int t,m,n;
     scanf("%d",&t);
-
     while(t--)
     {
         scanf("%d%d",&n,&m);
