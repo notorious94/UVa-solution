@@ -62,7 +62,6 @@ void input()
         {
             scanf("%d",&v);
             adj_list[u].push_back(v);
-            adj_list[v].push_back(u);
         }
     }
 }
