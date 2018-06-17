@@ -12,7 +12,9 @@ using namespace std;
 #define pif(a) printf("%d\n",a)
 #define puf(a) printf("%llu\n",a)
 
-void BFS(map<string,vector<string> >city, string s, string e)
+map<string, vector<string> > city;
+
+void BFS(string s, string e)
 {
     map<string, bool> visit;
     map<string, int> level;
@@ -54,7 +56,7 @@ void BFS(map<string,vector<string> >city, string s, string e)
     }
 
     if(level[e]==-1||level[e]==0)
-        cout<<"No route"<<endl;
+        puts("No route");
 
     else
     {
@@ -80,40 +82,35 @@ void BFS(map<string,vector<string> >city, string s, string e)
         while(ans.size()!=0)
         {
             b = ans.front();
-            cout<<a<<" "<<b<<endl;
+            printf("%s %s\n",a.c_str(),b.c_str());
             a = b;
             ans.pop();
         }
     }
-
 }
+
 int main()
 {
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
-
     int n,kase=0;
-    string a,b,S,E;
-    map<string, vector<string> > city;
-
+    char a[100];
+    char b[100];
+    char S[100];
+    char E[100];
     while(sf("%d", &n)!=EOF)
     {
         kase++;
-
-        if(kase>1)
-            cout<<endl;
-
+        if(kase>1)  puts("");
         while(n--)
         {
-            cin>>a>>b;
+            scanf("%s%s",a,b);
             city[a].push_back(b);
             city[b].push_back(a);
         }
-
-        cin>>S>>E;
-        BFS(city,S,E);
+        scanf("%s%s",S,E);
+        BFS(S,E);
         city.clear();
-
     }
     return 0;
 }
