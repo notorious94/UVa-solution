@@ -39,6 +39,7 @@ double _distance(double x1,double y1,double x2,double y2)
     return sqrt((x1x2*x1x2)+(y1y2*y1y2));
 }
 
+
 vector<int>primes;
 vector<ull>expo[78498];
 int prime[1000001];
@@ -57,6 +58,7 @@ void sieve()
     }
 }
 
+
 void power()
 {
     for(int i=0;i<primes.size();i++)
@@ -70,29 +72,23 @@ void power()
     }
 }
 
+
 int main()
 {
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
-
     sieve();
     power();
-
     ll a,b,t;
-
     scanf("%lld",&t);
-
     while(t--)
     {
         scanf("%lld%lld",&a,&b);
         int ans = 0;
-        for(int i=0;i<primes.size()&&primes[i]<=b;i++)
-        {
+        for(int i=0;i<primes.size()&&expo[i][0]<=b;i++)
             for(int j=0;j<expo[i].size()&&expo[i][j]<=b;j++)
                 if(expo[i][j]>=a) ans++;
-        }
         printf("%d\n",ans);
     }
-
     return 0;
 }
