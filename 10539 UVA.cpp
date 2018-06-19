@@ -40,13 +40,11 @@ double _distance(double x1,double y1,double x2,double y2)
 }
 
 vector<int>primes;
+vector<ull>expo[78498];
 int prime[1000001];
 
-int main()
+void sieve()
 {
-    freopen("in.txt","r", stdin);
-    freopen("out.txt","w", stdout);
-
     for(int i=2;i<1000001;i++)
     {
         if(prime[i]==0)
@@ -57,21 +55,44 @@ int main()
         for(int j=0;j<primes.size()&&i*primes[j]<=1000000&&primes[j]<=i;j++)
             prime[i*primes[j]] = primes[j];
     }
+}
 
-    double a,b,t;
-    scanf("%lf",&t);
+void power()
+{
+    for(int i=0;i<primes.size();i++)
+    {
+        ull temp = primes[i];
+        while(temp*primes[i]<=1000000000000)
+        {
+            expo[i].push_back(temp*primes[i]);
+            temp*=primes[i];
+        }
+    }
+}
+
+int main()
+{
+    //freopen("in.txt","r", stdin);
+    //freopen("out.txt","w", stdout);
+
+    sieve();
+    power();
+
+    ll a,b,t;
+
+    scanf("%lld",&t);
+
     while(t--)
     {
-        scanf("%lf%lf",&a,&b);
-        int c = 0;
-        for(int i=0;i<primes.size()&& primes[i]<=b;i++)
-            for(int j=2;;j++)
-            {
-                double r = pow(primes[i],j);
-                if(r>b)     break;
-                if(r>=a)    c++;
-            }
-        printf("%d\n",c);
+        scanf("%lld%lld",&a,&b);
+        int ans = 0;
+        for(int i=0;i<primes.size()&&primes[i]<=b;i++)
+        {
+            for(int j=0;j<expo[i].size()&&expo[i][j]<=b;j++)
+                if(expo[i][j]>=a) ans++;
+        }
+        printf("%d\n",ans);
     }
+
     return 0;
 }
