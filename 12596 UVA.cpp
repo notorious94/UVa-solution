@@ -61,7 +61,7 @@ ll step_size(char C,int step)
     ll res = 0;
     for (int i=0;i<keypad[C-'A'].size();i++)
         res += step_size(keypad[C-'A'][i],step-1);
-    DP[C-'A'][step] = res;
+    return DP[C-'A'][step] = res;
 }
 
 void pre_calculate()
