@@ -73,6 +73,7 @@ int main()
             ll b = *j;
             m = a*b;
             if(m<=p&&m>1)   r.insert(m);
+            else break;
         }
     }
 
