@@ -63,6 +63,7 @@ int main()
     while(p<=2000000000)
         r.insert(p),p*=7;;
     p = 2000000000;
+
     for(i=r.begin();i!=r.end();i++)
     {
         j = i;
@@ -72,6 +73,7 @@ int main()
             ll a = *i;
             ll b = *j;
             m = a*b;
+            if(r.size()==5842)  break;
             if(m<=p&&m>1)   r.insert(m);
             else break;
         }
@@ -79,7 +81,6 @@ int main()
 
     for(i = r.begin();i!=r.end();i++)
         s.push_back(*i);
-    //cout<<s.size()<<endl;
     int n;
     while(scanf("%d",&n))
     {
