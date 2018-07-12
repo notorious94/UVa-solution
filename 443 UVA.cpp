@@ -39,9 +39,6 @@ double _distance(double x1,double y1,double x2,double y2)
     return sqrt((x1x2*x1x2)+(y1y2*y1y2));
 }
 
-vector<int>ara;
-int c[400];
-
 int main()
 {
     //freopen("in.txt","r", stdin);
