@@ -1,0 +1,44 @@
+import java.lang.*;
+import java.lang.reflect.Array;
+import java.util.*;
+
+public class Main
+{
+    public static boolean self[] = new boolean[1000001];
+    public static void generate()
+    {
+        Arrays.fill(self,true);
+        for(int i=1;i<=1000000;i++)
+        {
+            if(self[i])
+            {
+                int n = i;
+                while (true)
+                {
+                    int sum = n;
+                    while (n!=0)
+                    {
+                        sum+=(n%10);
+                        n/=10;
+                    }
+                    n = sum;
+                    if(n<=1000000&&self[n])
+                        self[n] = false;
+                    else    break;
+                }
+            }
+        }
+    }
+    public static void print()
+    {
+        for (int i=1;i<=1000000;i++)
+            if(self[i]==true)
+                System.out.println(i);
+    }
+    public static void main(String[] args)
+    {
+        generate();
+        print();
+        System.exit(0);
+    }
+}
