@@ -39,31 +39,27 @@ double _distance(double x1,double y1,double x2,double y2)
     return sqrt((x1x2*x1x2)+(y1y2*y1y2));
 }
 
-int lp[1000001];
+int lp[46341];
 vector<int>prime,primes;
 
 void sieve()
 {
     lp[0] = lp[1] = -1;
-    for(int i=2;i<1000001;i++)
+    for(int i=2;i<46341;i++)
     {
         if(lp[i]==0)
         {
             lp[i] = i;
             prime.push_back(i);
         }
-        for(int j=0;j<prime.size()&&prime[j]<=i&&i*prime[j]<1000001;j++)
+        for(int j=0;j<prime.size()&&prime[j]<=i&&i*prime[j]<46341;j++)
             lp[i*prime[j]] = i;
     }
 }
 
 bool isPrime(int n)
 {
-    if(n<1000001)
-    {
-        if(lp[n]==n)    return true;
-        return false;
-    }
+    if(n<46341)   return (lp[n]==n);
     int root = sqrt(n);
     for(int i=0;i<prime.size()&&prime[i]<=root;i++)
         if(n%prime[i]==0)   return false;
@@ -84,34 +80,37 @@ int main()
     //freopen("out.txt","w", stdout);
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
+
     sieve();
+
     ll L,U;
+
     while(scanf("%lld%lld",&L,&U)==2)
     {
         generate_prime(L,U);
-        int close = INF,far = -INF;
-        int a = -1,b = -1,A = -1,B = -1;
+
+        int close = INF,far = -INF,a,b,A,B;
         bool update = false;
+
         for(int i=1;i<primes.size();i++)
         {
-            if(close>primes[i]-primes[i-1])
+            if(close > primes[i]-primes[i-1])
             {
-                close = primes[i]-primes[i-1];
+                close = primes[i] - primes[i-1];
                 a = primes[i-1];
                 b = primes[i];
                 update = true;
             }
             if(far < primes[i]-primes[i-1])
             {
-                far = primes[i]-primes[i-1];
+                far = primes[i] - primes[i-1];
                 A = primes[i-1];
                 B = primes[i];
                 update = true;
             }
         }
-        if(update)
-            printf("%d,%d are closest, %d,%d are most distant.\n",a,b,A,B);
-        else    puts("There are no adjacent primes.");
+        if(update)  printf("%d,%d are closest, %d,%d are most distant.\n",a,b,A,B);
+        else        puts("There are no adjacent primes.");
     }
     return 0;
 }
