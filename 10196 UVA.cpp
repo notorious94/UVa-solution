@@ -20,11 +20,11 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 
-int dx[]={0,0,1,-1,-1,1,-1,1};
-int dy[]={-1,1,0,0,1,1,-1,-1};
-int dz[]={0,0,1,-1,-1,1,-1,1};
-int kx[]={2,2,-2,-2,1,-1,1,-1};
-int ky[]={1,-1,1,-1,2,2,-2,-2};
+int dx[]= {0,0,1,-1,-1,1,-1,1};
+int dy[]= {-1,1,0,0,1,1,-1,-1};
+int dz[]= {0,0,1,-1,-1,1,-1,1};
+int kx[]= {2,2,-2,-2,1,-1,1,-1};
+int ky[]= {1,-1,1,-1,2,2,-2,-2};
 
 int isLeft(double a, double b, double c, double d, double e, double f)
 {
@@ -47,7 +47,7 @@ bool game()
 {
     board.clear();
     char line[10];
-    for(int i=0;i<8;i++)
+    for(int i=0; i<8; i++)
     {
         gets(line);
         board.push_back(line);
@@ -81,7 +81,7 @@ bool pawn(int i,int j)
 bool king(int i,int j)
 {
     int x = i, y = j;
-    for(int a=0;a<4;a++)
+    for(int a=0; a<4; a++)
     {
         i = x, j = y;
         while(inBound(i+dx[a],j+dy[a]))
@@ -94,7 +94,7 @@ bool king(int i,int j)
             else if(board[i][j]!='.')   break;
         }
     }
-    for(int a=4;a<8;a++)
+    for(int a=4; a<8; a++)
     {
         i = x, j = y;
         while(inBound(i+dx[a],j+dy[a]))
@@ -113,7 +113,7 @@ bool king(int i,int j)
 bool knight(int i,int j)
 {
     int x = i, y = j;
-    for(int a=0;a<8;a++)
+    for(int a=0; a<8; a++)
     {
         i = x, j = y;
         if(inBound(i+kx[a],j+ky[a]))
@@ -128,54 +128,51 @@ bool knight(int i,int j)
     return false;
 }
 
-int main()
+bool Check(char King)
 {
-    //freopen("in.txt","r", stdin);
-    //freopen("out.txt","w", stdout);
-    //ios_base::sync_with_stdio(false);
-    //cin.tie(NULL);
-
-    for(int i=0;i<8;i++)
-        no_game.push_back("........");
-    int kase = 1;
-    while(game())
+    bool check = false;
+    for(int i=0; i<8; i++)
     {
-        printf("Game #%d: ",kase++);
-
-        bool check = false;
-
-        for(int i=0;i<8;i++)
+        for(int j=0; j<8; j++)
         {
-            for(int j=0;j<8;j++)
+            if(King=='k')
             {
                 if(board[i][j]=='P')    check = pawn(i,j);
                 else if(board[i][j]=='N')   check = knight(i,j);
                 else if(board[i][j]=='k')   check = king(i,j);
-                if(check)   break;
             }
-            if(check)   break;
-        }
-        if(check)  {
-            puts("black king is in check.");
-            continue;
-        }
-
-        for(int i=0;i<8;i++)
-        {
-            for(int j=0;j<8;j++)
+            else if(King=='K')
             {
                 if(board[i][j]=='p')    check = pawn(i,j);
                 else if(board[i][j]=='n')   check = knight(i,j);
                 else if(board[i][j]=='K')   check = king(i,j);
-                if(check)   break;
             }
-            if(check)   break;
+            if(check)   return true;
         }
+    }
+    return false;
+}
+int main()
+{
+    //freopen("in.txt","r", stdin);
+    //freopen("out.txt","w", stdout);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-        if(check)
-            puts("white king is in check.");
-        else
-            puts("no king is in check.");
+    for(int i=0; i<8; i++)
+        no_game.push_back("........");
+
+    int kase = 1;
+    char white[] = "white king is in check.";
+    char black[] = "black king is in check.";
+    char noking[] = "no king is in check.";
+
+    while(game())
+    {
+        printf("Game #%d: ",kase++);
+        if(Check('k'))  puts(black);
+        else if(Check('K'))  puts(white);
+        else    puts(noking);
     }
 
     return 0;
