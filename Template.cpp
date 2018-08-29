@@ -27,6 +27,8 @@ typedef unsigned long long ull;
 int dx[]={0,0,1,-1,-1,1,-1,1};
 int dy[]={-1,1,0,0,1,1,-1,-1};
 int dz[]={0,0,1,-1,-1,1,-1,1};
+int kx[]= {2,2,-2,-2,1,-1,1,-1};
+int ky[]= {1,-1,1,-1,2,2,-2,-2};
 
 int isLeft(double a, double b, double c, double d, double e, double f)
 {
