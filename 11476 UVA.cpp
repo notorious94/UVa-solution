@@ -129,8 +129,7 @@ int main()
         printf("%lld =",n);
         while(true)
         {
-            if(n==1)
-                break;
+            if(n==1)    break;
             else if(isPrime(n))
             {
                 F.push_back(n);
@@ -143,6 +142,16 @@ int main()
                 {
                     F.push_back(div);
                     n/=div;
+                }
+                if(isPrime(n))
+                {
+                    F.push_back(n);
+                    break;
+                }
+                else if(n<=limit)
+                {
+                    factorize(n);
+                    break;
                 }
             }
             else
