@@ -78,6 +78,11 @@ void Dijkstra()
     {
         int ux = pq.top().x;
         int uy = pq.top().y;
+        if(ux==r-1 && uy==c-1)
+        {
+            pif(level[ux][uy]);
+            return;
+        }
         int c = pq.top().w;
         pq.pop();
 
@@ -96,7 +101,7 @@ void Dijkstra()
             }
         }
     }
-    pif(level[r-1][c-1]);
+    return;
 }
 
 int main()
