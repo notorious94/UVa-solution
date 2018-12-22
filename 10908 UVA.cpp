@@ -1,113 +1,91 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-/// M A C R O Starts Here
-#define pf printf
-#define sf scanf
-#define MAX 500000
-#define INF 0x7FFFFFFF
-#define pi acos(-1.0)
-#define get_stl(s) getline(cin,s)
-#define sif(a) scanf("%d",&a)
-#define pif(a) printf("%d\n",a)
-#define puf(a) printf("%llu\n",a)
-#define pii pair<int, int>
+int M,N;
+char ch;
+vector<string>grid;
 
-typedef long long ll;
-typedef unsigned long long ull;
-
-string grid[500];
-int m,n;
-int ax,ay;
-int bx,by;
-int cx,cy;
-int dx,dy;
-
-bool chk(int x, int y)
+bool inBound(int x,int y)
 {
-    return (x>=0 && x<m && y>=0 && y<n) ? true : false;
+    return(x>=0&&x<M&&y>=0&&y<N);
 }
 
-bool square(char item)
+bool bar_1(int a,int b,int c,int d)
 {
-    if(!chk(ax,ay)||!chk(bx,by)||!chk(cx,cy)||!chk(dx,dy))
-        return false;
-
-    int p,q;
-    int u,v;
-
-    for(p = ax,q=ay;p<=bx&&q<=by;q++) /// A -> B
-        if(grid[p][q]!=item)    return false;
-
-    for(p = ax,q=ay;p<=cx&&q<=cy;p++) /// A -> C
-        if(grid[p][q]!=item)    return false;
-
-    for(p = cx,q=cy;p<=dx&&q<=dy;q++) /// C -> D
-        if(grid[p][q]!=item)    return false;
-
-    for(p = bx,q=by;p<=dx&&q<=dy;p++) /// B to D
-        if(grid[p][q]!=item)    return false;
-
+    for(int i=a,j=b;j<=d;j++)
+        if(grid[i][j]!=ch)
+            return false;
     return true;
+}
 
+bool bar_2(int a,int b,int c,int d)
+{
+    for(int i=a,j=b;i<=c;i++)
+        if(grid[i][j]!=ch)
+            return false;
+    return true;
 }
 
 int main()
 {
-    //freopen("in.txt","r", stdin);
-    //freopen("out.txt","w", stdout);
-    //ios_base::sync_with_stdio(false);
-    //cin.tie(NULL);
+    //freopen("in.txt","r",stdin);
+    //freopen("out.txt","w",stdout);
 
-    int t,q,x,y;
-    cin>>t;
+    int test,q,r,c;
+    string s;
 
-    while(t--)
+    cin>>test;
+
+    while(test--)
     {
-        cin>>m>>n>>q;
-        cout<<m<<" "<<n<<" "<<q<<endl;
+        cin>>M>>N>>q;
 
-        for(int i=0;i<m;i++)
-            cin>>grid[i];
+        grid.clear();
+
+        for(int i=0;i<M;i++)
+        {
+            cin>>s;
+            grid.push_back(s);
+        }
+
+        printf("%d %d %d\n",M,N,q);
 
         while(q--)
         {
-            cin>>x>>y;
+            cin>>r>>c;
 
-            ax = x-1;
-            ay = y-1;
+            ch = grid[r][c];
 
-            bx = x-1;
-            by = y+1;
-
-            cx = x+1;
-            cy = y-1;
-
-            dx = x+1;
-            dy = y+1;
+            int corner_1_and_4 = 1;
 
             int level = 0;
+            int x1,x2,x3,x4;
+            int y1,y2,y3,y4;
 
-            while(square(grid[x][y]))
+            for(int i=1;;i++)
             {
-                level++;
+                x1 = r - i;
+                y1 = c - i;
 
-                ax -=1;
-                ay -=1;
+                x2 = r - i;
+                y2 = c + i;
 
-                bx -=1;
-                by +=1;
+                x3 = r + i;
+                y3 = c - i;
 
-                cx +=1;
-                cy -=1;
+                x4 = r + i;
+                y4 = c + i;
 
-                dx +=1;
-                dy +=1;
+                if(inBound(x1,y1)&&inBound(x2,y2)&&inBound(x3,y3)&&inBound(x4,y4))
+                {
+                    if(bar_1(x1,y1,x2,y2)&&bar_2(x1,y1,x3,y3)&&bar_2(x2,y2,x4,y4)&&bar_1(x3,y3,x4,y4))
+                        level++;
+                    else    break;
+                }
+                else        break;
             }
-
-            cout<<level*2+1<<endl;
+            cout<<(2*level)+1<<endl;
         }
     }
-
     return 0;
 }
