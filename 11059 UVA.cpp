@@ -1,5 +1,7 @@
 #include<bits/stdc++.h>
+
 using namespace std;
+
 typedef long long ll;
 
 int main()
@@ -13,24 +15,32 @@ int main()
 
     while(scanf("%lld",&n)==1)
     {
-        ll max_p = 0;
         ara.clear();
+
         for(int i=0;i<n;i++)
         {
             scanf("%lld",&x);
             ara.push_back(x);
         }
-        for(int i=0;i<n;i++)
+
+        ll maxValue,minValue,maxProduct = 0;
+
+        maxValue = ara[0];
+        minValue = ara[0];
+
+        maxProduct = max(maxProduct,ara[0]);
+
+        for(int i=1;i<n;i++)
         {
-            ll cur_p = ara[i];
-            max_p = max(max_p,cur_p);
-            for(int j=i+1;j<n;j++)
-            {
-                cur_p*=ara[j];
-                max_p = max(max_p,cur_p);
-            }
+            if(ara[i]<0)    swap(minValue,maxValue);
+
+            minValue = min(ara[i],minValue*ara[i]);
+            maxValue = max(ara[i],maxValue*ara[i]);
+
+            maxProduct = max(maxProduct,maxValue);
         }
-        printf("Case #%lld: The maximum product is %lld.\n\n",kase++,max_p);
+        printf("Case #%lld: The maximum product is %lld.\n\n",kase++,maxProduct);
     }
+
     return 0;
 }
