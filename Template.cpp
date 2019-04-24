@@ -1,4 +1,6 @@
 #include<bits/stdc++.h>
+#pragma GCC optimize("Ofast")
+
 using namespace std;
 
 /// M A C R O Starts Here
@@ -20,22 +22,28 @@ using namespace std;
 #define mem(name, value) memset(name, value, sizeof(name))
 #define all(name) name.begin(),name.end()
 #define pq_min priority_queue< int, vector<int>, greater<int> >
+#define dbg(args...)    do { cerr << #args << ' ' ; print(args); } while(0); cerr << endl;
 
 typedef long long ll;
 typedef unsigned long long ull;
 
-int dx[]={0,0,1,-1,-1,1,-1,1};
-int dy[]={-1,1,0,0,1,1,-1,-1};
-int dz[]={0,0,1,-1,-1,1,-1,1};
+int dx[]= {0,0,1,-1,-1,1,-1,1};
+int dy[]= {-1,1,0,0,1,1,-1,-1};
+int dz[]= {0,0,1,-1,-1,1,-1,1};
 int kx[]= {2,2,-2,-2,1,-1,1,-1};
 int ky[]= {1,-1,1,-1,2,2,-2,-2};
 
-int isLeft(double a, double b, double c, double d, double e, double f)
+template <typename T>
+void print(const T& x)
 {
-    double r = 0.5*((a*(d-f))+(b*(e-c))+((c*f)-(d*e)));
-    if(r==0.00) return 0;
-    if(r<0)     return -1;
-    return 1;
+    cerr<<x<<' ';
+}
+
+template <typename T1, typename... T2>
+void print(const T1& first, const T2&... rest)
+{
+    print(first);
+    print(rest ...) ;
 }
 
 double _distance(double x1,double y1,double x2,double y2)
@@ -48,7 +56,6 @@ double _distance(double x1,double y1,double x2,double y2)
 /*
 int lp[32001];
 vector<int>prime;
-
 void sieve(int limit = 32001)
 {
     for(int i=2;i<limit;i++)
@@ -66,10 +73,12 @@ void sieve(int limit = 32001)
 
 int main()
 {
+    /// Suck my dick! HACKER -_-
     //freopen("in.txt","r", stdin);
     //freopen("out.txt","w", stdout);
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(NULL),cout.tie(NULL);
+
 
     return 0;
 }
