@@ -33,6 +33,8 @@ int dz[]= {0,0,1,-1,-1,1,-1,1};
 int kx[]= {2,2,-2,-2,1,-1,1,-1};
 int ky[]= {1,-1,1,-1,2,2,-2,-2};
 
+/// Template Starts here
+
 template <typename T>
 void print(const T& x)
 {
@@ -45,7 +47,17 @@ void print(const T1& first, const T2&... rest)
     print(first);
     print(rest ...) ;
 }
+/// Template Ends here
 
+/// Functions Starts here
+
+bool isPal(string s)
+{
+    int half = s.size()/2;
+    for(int i=0,j=s.size()-1;i<half;i++,j--)
+        if(s[i]!=s[j])  return false;
+    return true;
+}
 double _distance(double x1,double y1,double x2,double y2)
 {
     double x1x2 = x1 - x2;
@@ -70,6 +82,8 @@ void sieve(int limit = 32001)
     }
 }
 */
+
+/// Functions Starts here
 
 int main()
 {
