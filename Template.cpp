@@ -58,11 +58,29 @@ bool isPal(string s)
         if(s[i]!=s[j])  return false;
     return true;
 }
+
 double _distance(double x1,double y1,double x2,double y2)
 {
     double x1x2 = x1 - x2;
     double y1y2 = y1 - y2;
     return sqrt((x1x2*x1x2)+(y1y2*y1y2));
+}
+
+bool inBound(int x,int y,int r,int c)
+{
+    return (x>=0&&x<r&&y>=0&&y<c);
+}
+
+ll mulmod(ll a, ll b, ll c)
+{
+    ll x = 0, y = a % c;
+    while (b > 0)
+    {
+        if (b&1) x = (x + y) % c;
+        y = (y << 1) % c;
+        b >>= 1;
+    }
+    return x % c;
 }
 
 /*
@@ -83,7 +101,7 @@ void sieve(int limit = 32001)
 }
 */
 
-/// Functions Starts here
+/// Functions Ends here
 
 int main()
 {
