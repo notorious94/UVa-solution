@@ -144,21 +144,10 @@ int main()
             ans%=10;
         }
         ll two = koto(2,n), five = koto(5,n);
-        if(two>five)
+        for(int i=1;i<=two-five;i++)
         {
-            for(int i=1;i<=two-five;i++)
-            {
-                ans*=2;
-                ans%=10;
-            }
-        }
-        else if(five>two)
-        {
-            for(int i=1;i<=five-two;i++)
-            {
-                ans*=5;
-                ans%=10;
-            }
+            ans*=2;
+            ans%=10;
         }
         cout<<ans<<endl;
     }
